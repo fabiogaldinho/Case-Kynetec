@@ -334,6 +334,7 @@ body {
     overflow: hidden;
     background: var(--bg-tertiary);
     min-height: 500px;
+    z-index: 1; 
 }
 
 .leaflet-control-zoom a {
