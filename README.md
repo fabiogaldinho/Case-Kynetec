@@ -5,6 +5,13 @@ Dashboard executivo para comparação de dados de cultivo de soja entre IBGE e C
 Este dashboard foi desenvolvido como uma aplicação web utilizando Flask, uma escolha estratégica que combina a robustez do Python para processamento de dados com a flexibilidade do JavaScript para visualizações interativas. Optei por uma arquitetura que separa claramente as responsabilidades: todo o processamento pesado de dados acontece no backend através de processadores especializados, que recebem os datasets (previamente tratados em Jupyter Notebook), aplicam as transformações necessárias e entregam ao frontend estruturas de dados prontas para consumo direto pelo Plotly.js e Leaflet.
 
 Essa abordagem mantém o frontend leve e responsivo, mesmo ao lidar com mapas interativos e grandes volumes de dados agrícolas. O dashboard implementa uma hierarquia inteligente de filtros - globais (safra e fonte) que afetam toda a aplicação, e locais em componentes específicos, sempre com lógica de fallback para garantir que o usuário executivo tenha insights disponíveis em qualquer combinação de parâmetros. O objetivo foi entregar performance, escalabilidade e uma experiência fluida sem depender de frameworks pesados, para mostrar que simplicidade bem arquitetada supera complexidade desnecessária.
+<br>
+
+
+## **COMO RODAR O PROJETO**
+A aplicação está rodando no seguinte link:
+https://case-kynetec.onrender.com/
+<br>
 
 ## **COMO RODAR O PROJETO LOCALMENTE**
 ### **PRÉ-REQUISITO**
