@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Evolução da Cultura Soja | Kynetec</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-left">
+            <div class="logo">kynetec</div>
+            <div class="header-title">
+                <h1>Evolução da Área Plantada de Soja no Brasil</h1>
+                <p>Comparação entre dados IBGE e CONAB Safras 18/19 - 21/22</p>
+            </div>
+        </div>
+        <div class="header-filters">
+            <div class="filter-group">
+                <label for="filtro-ano">Safra</label>
+                <select id="filtro-ano" name="ano">
+                    <option value="2022">21/22</option>
+                    <option value="2021" selected>20/21</option>
+                    <option value="2020">19/20</option>
+                    <option value="2019">18/19</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filtro-fonte">Fonte</label>
+                <select id="filtro-fonte" name="fonte">
+                    <option value="todas" selected>Todas</option>
+                    <option value="ibge">IBGE</option>
+                    <option value="conab">CONAB</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <section class="kpi-section">
+            <div class="kpi-grid">
+                <div class="kpi-card" id="kpi-area-nacional">
+                    <div class="kpi-label">Área Nacional (2021)</div>
+                    <div class="kpi-value" id="kpi-area-valor">39,5M ha</div>
+                    <div class="kpi-change positive" id="kpi-area-change">
+                        <span class="arrow">↑</span> <span id="kpi-area-change-text">+5,2% vs 2020</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" id="kpi-crescimento">
+                    <div class="kpi-label">Crescimento Anual</div>
+                    <div class="kpi-value" id="kpi-crescimento-valor">+5,2%</div>
+                    <div class="kpi-change positive" id="kpi-crescimento-change">
+                        <span class="arrow">↑</span> <span id="kpi-crescimento-change-text">Acima da média histórica</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" id="kpi-gap">
+                    <div class="kpi-label">Gap IBGE vs CONAB</div>
+                    <div class="kpi-value" id="kpi-gap-valor">+0,99%</div>
+                    <div class="kpi-change neutral" id="kpi-gap-change">
+                        <span id="kpi-gap-change-text">CONAB superior em 2021</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" id="kpi-municipios">
+                    <div class="kpi-label">Municípios Produtores</div>
+                    <div class="kpi-value" id="kpi-municipios-valor">2.472</div>
+                    <div class="kpi-change neutral" id="kpi-municipios-change">
+                        <span id="kpi-municipios-change-text">Aumento de 3,47%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-section">
+            <div class="grid-60-40">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title" id="tit_mapa">Distribuição Geográfica</div>
+                            <div class="chart-subtitle" id="subt_mapa">Área plantada por estado (2021)</div>
+                        </div>
+                    </div>
+
+                    <div id="mapa-brasil" class="map-container"></div>
+                </div>
+
+                <div class="right-column-split">
+                    <div class="chart-container chart-compact">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title">Evolução Temporal (IBGE)</div>
+                                <div class="chart-subtitle" id="subtitulo_evtemp">Comparação Nacional vs Município Selecionado</div>
+                            </div>
+
+                            <div id="container-select-municipio">
+                                <select id="select-municipio" class="filter-select-inline">
+                                    <option value="">Água Boa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="grafico-evolucao-temporal"></div>
+                    </div>
+
+                    <div class="municipio-card" id="card-municipio">
+                        <div class="municipio-header">
+                            <div>
+                                <div class="municipio-title" id="tit_mun_destaque">Município em Destaque</div>
+                                <div class="municipio-name">
+                                    <span id="municipio-nome">Água Boa</span>
+                                    <span id="municipio-ranking" style="font-size: 18px"> - 1º no estado</span>
+                                </div>
+                                <div class="municipio-state" id="municipio-estado">Mato Grosso - MT</div>
+                            </div>
+                            <div class="municipio-code" id="municipio-codigo">5100201</div>
+                        </div>
+
+                        <div class="municipio-metrics">
+                            <div class="metric-item">
+                                <div class="metric-label" id="label_area_plantada">Área Plantada 2022</div>
+                                <div class="metric-value" id="municipio-area">185,8 mil ha</div>
+                                <div class="metric-change" id="municipio-variacao">↑ +6,2% vs 2021</div>
+                            </div>
+
+                            <div class="metric-item">
+                                <div class="metric-label">% do Estado (MT)</div>
+                                <div class="metric-value" id="municipio-representatividade">1,77%</div>
+                                <div class="metric-change">Representatividade</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="comparison-section">
+            <div class="grid-40-60">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Comparação IBGE vs CONAB - Variação Nacional</div>
+                            <div class="chart-subtitle">Área plantada por safra e representatividade por estado</div>
+                        </div>
+
+                        <div class="chart-controls">
+                            <button id="toggle-view-comparacao" class="btn-toggle-view" title="Alternar entre visão nacional e por estado">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <rect x="1" y="11" width="4" height="4"/>
+                                    <rect x="6" y="8" width="4" height="7"/>
+                                    <rect x="11" y="5" width="4" height="10"/>
+                                </svg>
+                                <span id="label-view-comparacao">Por Estado</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="grafico-comparacao-ibge-conab"></div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title" id="titulo_waterfall">Variação por Estado</div>
+                            <div class="chart-subtitle" id="subtitulo_waterfall">Contribuição para crescimento nacional (2020-2021)</div>
+                        </div>
+                        <div class="chart-filter-local">
+                            <select id="filtro-periodo-waterfall" class="filter-select-inline">
+                                <option value="2019-2020">Safra 18/19 → 19/20</option>
+                                <option value="2020-2021" selected>Safra 19/20 → 20/21</option>
+                                <option value="2021-2022">Safra 20/21 → 21/22</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="grafico-waterfall-estados"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>
+                <strong>Dashboard Executivo da Evolução da Área Plantada de Soja no Brasil</strong>
+                <br>Desenvolvido por Fábio Galdino como parte do Processo Seletivo da Kynetec
+            </p>
+        </footer>
+
+    </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
