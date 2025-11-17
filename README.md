@@ -6,11 +6,12 @@ Este dashboard foi desenvolvido como uma aplicação web utilizando Flask, uma e
 
 Essa abordagem mantém o frontend leve e responsivo, mesmo ao lidar com mapas interativos e grandes volumes de dados agrícolas. O dashboard implementa uma hierarquia inteligente de filtros - globais (safra e fonte) que afetam toda a aplicação, e locais em componentes específicos, sempre com lógica de fallback para garantir que o usuário executivo tenha insights disponíveis em qualquer combinação de parâmetros. O objetivo foi entregar performance, escalabilidade e uma experiência fluida sem depender de frameworks pesados, para mostrar que simplicidade bem arquitetada supera complexidade desnecessária.
 <br>
-
+<br>
 
 ## **COMO RODAR O PROJETO**
 A aplicação está rodando no link:
 https://case-kynetec.onrender.com/
+<br>
 <br>
 
 ## **COMO RODAR O PROJETO LOCALMENTE**
@@ -45,6 +46,26 @@ python app.py
 Abra seu navegador e acesse:
 ```
 http://localhost:5000
+```
+<br>
+
+## **ESTRUTURA DE PASTAS DO PROJETO**
+```
+case-kynetec/
+├── api/
+├── dados/
+│   ├── geojson/
+│   └── processados/
+├── notebooks/
+├── static/
+│   ├── css/
+│   └── js/
+├── templates/
+├── README.md
+├── app.py
+├── config.py
+├── requirements.txt
+└── wsgi.py
 ```
 <br>
 
