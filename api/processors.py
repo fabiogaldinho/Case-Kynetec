@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import topojson as tp
 import math, json
 from api.data_loader import data_loader
 
