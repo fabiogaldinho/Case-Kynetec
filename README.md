@@ -9,7 +9,7 @@ Essa abordagem mantém o frontend leve e responsivo, mesmo ao lidar com mapas in
 
 
 ## **COMO RODAR O PROJETO**
-A aplicação está rodando no seguinte link:
+A aplicação está rodando no link:
 https://case-kynetec.onrender.com/
 <br>
 
