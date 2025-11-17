@@ -3,3 +3,4 @@ flask_cors==6.0.1
 numpy==2.3.5
 pandas==2.3.3
 pyarrow==21.0.0
+gunicorn==21.2.0

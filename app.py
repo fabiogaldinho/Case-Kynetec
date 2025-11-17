@@ -3,6 +3,7 @@ from flask_cors import CORS
 from config import config
 from api.routes import api_bp
 from api.data_loader import data_loader
+import os
 
 
 def create_app(config_name = 'development'):
@@ -26,5 +27,9 @@ def create_app(config_name = 'development'):
 
 
 if __name__ == '__main__':
-    app = create_app()
-    app.run(debug = True, port = 5000)
+    env = 'production' if os.environ.get('PORT') else 'development'
+
+    app = create_app(env)
+    port = int(os.environ.get('PORT', 5000))
+
+    app.run(host='0.0.0.0', port=port, debug=(env == 'development'))
