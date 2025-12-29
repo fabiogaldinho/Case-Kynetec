@@ -30,6 +30,6 @@ if __name__ == '__main__':
     env = 'production' if os.environ.get('PORT') else 'development'
 
     app = create_app(env)
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 8090))
 
     app.run(host='0.0.0.0', port=port, debug=(env == 'development'))

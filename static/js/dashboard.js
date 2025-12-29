@@ -357,7 +357,7 @@ function configurarToggleComparacao() {
         if (modoComparacao === 'nacional') {
             modoComparacao = 'estadual';
             btnToggle.classList.add('active');
-            labelView.textContent = 'Visão Nacional';
+            labelView.textContent = 'Nacional';
             
             carregarGraficoComparacaoEstadual();
             
