@@ -101,6 +101,12 @@ body {
     padding-left: var(--spacing-lg);
 }
 
+.header-logo {
+    height: 32px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
 .header-title h1 {
     font-size: 20px;
     font-weight: 600;
@@ -698,4 +704,28 @@ body {
     background: var(--kynetec-blue);
     border-color: var(--kynetec-blue);
     color: white;
+}
+
+
+.btn-relatorio {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background: var(--kynetec-navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-relatorio:hover {
+    background: var(--kynetec-blue);
+    transform: scale(1.1);
 }

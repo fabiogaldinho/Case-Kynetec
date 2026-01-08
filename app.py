@@ -16,6 +16,10 @@ def create_app(config_name = 'development'):
         
     @app.route('/')
     def index():
+        return render_template('relatorio.html')
+
+    @app.route('/dashboard')
+    def dashboard():
         return render_template('dashboard.html')
     
 

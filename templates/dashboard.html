@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Evolução da Cultura Soja | Kynetec</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
+    <a href="/" class="btn-relatorio" title="Ver Relatório Executivo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+    </a>
     <header class="dashboard-header">
         <div class="header-left">
-            <div class="logo">kynetec</div>
+            <img src="/static/img/kynetec-logo.svg" alt="Kynetec" class="header-logo">
             <div class="header-title">
                 <h1>Evolução da Área Plantada de Soja no Brasil</h1>
                 <p>Comparação entre dados IBGE e CONAB Safras 18/19 - 21/22</p>
