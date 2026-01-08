@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Executivo - Análise de Importações de Agroquímicos | Kynetec</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/relatorio.css">
+</head>
+<body>
+
+<a href="/dashboard" class="btn-voltar no-print" title="Voltar para Dashboard">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="12" width="4" height="9" rx="1"/>
+        <rect x="10" y="6" width="4" height="15" rx="1"/>
+        <rect x="17" y="3" width="4" height="18" rx="1"/>
+    </svg>
+</a>
+
+<div class="page" id="page-1">
+    
+    <div class="cover-header">
+        <img src="/static/img/kynetec-logo.svg" alt="Kynetec" class="cover-logo">
+        <div class="cover-title">Análise Exploratória de Importações de Agroquímicos</div>
+        <div class="cover-subtitle">Glifosato, 2,4-D, Mancozebe e Cletodim | Dados Comex Stat 2020-2025</div>
+        <div class="cover-meta">
+            <span>Fábio Galdino | Processo Seletivo - Data Science, Innovation and Sustainability Analyst</span>
+            <span>Janeiro 2026</span>
+        </div>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">Sumário Executivo</div>
+        
+        <p>
+            Este relatório apresenta a análise exploratória das importações brasileiras de quatro moléculas-chave 
+            de agroquímicos: <span class="highlight-text">Glifosato</span>, <span class="highlight-text">2,4-D</span>, 
+            <span class="highlight-text">Mancozebe</span> e <span class="highlight-text">Cletodim</span>. 
+            A análise utilizou dados oficiais do Comex Stat (2020-2025) e preços de distribuição coletados pela Kynetec.
+        </p>
+
+        <p>
+            Um desafio metodológico significativo foi identificado: os códigos NCM inicialmente fornecidos 
+            mostraram-se insuficientes para capturar o volume real de importações. Através de pesquisa detalhada 
+            na estrutura do Sistema Harmonizado (SH), foram identificados NCMs adicionais nos Capítulos 29 (compostos 
+            químicos isolados) e 38 (produtos formulados), permitindo uma análise mais representativa do mercado.
+        </p>
+
+        <p>
+            A <strong>análise de tendência</strong> revelou um padrão comum às quatro moléculas: 
+            estabilidade em 2020, escalada iniciando em meados de 2021 (desestabilização da cadeia 
+            durante a pandemia), pico acentuado em 2022 (agravado pela guerra na Ucrânia e gargalos 
+            logísticos na China), e normalização a partir do segundo semestre de 2022. O Glifosato 
+            foi particularmente afetado: o preço de venda do Roundup WG quintuplicou, de R$ 25/kg 
+            para R$ 120/kg. Em 2023, os preços retornaram próximos ao patamar pré-crise, porém uma 
+            nova pressão de alta emerge em 2025 devido à redução de capacidade produtiva por 
+            fabricantes chineses.
+        </p>
+
+        <p>
+            A <strong>análise de correlação</strong> investigou a relação entre variações do preço 
+            de importação e variações do preço de venda, identificando dinâmicas distintas por molécula. 
+            Glifosato apresenta correlação moderada-forte (r=0.55) com janela de 3 meses, indicando 
+            repasse rápido de custos. 2,4-D mostra correlação moderada (r=0.41) com janela de 6 meses, 
+            respondendo a tendências mais persistentes. Mancozebe apresenta correlação fraca (r≈0.25), 
+            consistente com a estratégia da UPL de absorver volatilidade via integração vertical. 
+            Para Cletodim, a correlação é negativa (r≈-0.30), porém a interpretação é limitada: 
+            os NCMs de importação disponíveis agregam múltiplas moléculas, não representando 
+            fielmente o custo do ingrediente ativo.
+        </p>
+    </div>
+
+    <div class="insight-box">
+        <div class="insight-title">Principal Descoberta</div>
+        <p>
+            Glifosato e 2,4-D são candidatos viáveis para modelos preditivos utilizando 
+            variação do preço de importação como feature (r=0.55 e r=0.41). Mancozebe 
+            apresenta correlação fraca, exigindo maior peso em variáveis externas. 
+            Para todas as moléculas, features de mercado (demanda agrícola, clima, câmbio, etc) 
+            são necessárias para capturar a dinâmica completa. Cletodim requer estudo 
+            adicional para identificar fontes de dados de importação mais granulares.
+        </p>
+    </div>
+
+    <div class="page-footer">
+        <span>Relatório Executivo | Análise de Importações de Agroquímicos</span>
+        <span>Página 1 de 5</span>
+    </div>
+</div>
+
+<div class="page" id="page-2">
+    
+    <div class="section report-content">
+        <div class="section-title">1. Ranking e Evolução de Volumes Importados</div>
+        <div class="section-subtitle">Análise comparativa das quatro moléculas no período 2020-2025</div>
+
+        <p>
+            A tabela abaixo apresenta o ranking das moléculas por valor e volume importado em 2025. 
+            A China mantém posição dominante como origem principal para três das quatro moléculas, 
+            enquanto a Índia lidera no fornecimento de Mancozebe.
+        </p>
+
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Molécula</th>
+                    <th>Valor (USD MM)</th>
+                    <th>Volume (ton)</th>
+                    <th>Preço Médio (R$/kg)</th>
+                    <th>Origem Principal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1º</td>
+                    <td><span class="badge badge-clethodim">Cletodim*</span></td>
+                    <td class="td-number">1.430,00</td>
+                    <td class="td-number">281.942</td>
+                    <td class="td-number">28,06</td>
+                    <td>China (91%)</td>
+                </tr>
+                <tr>
+                    <td>2º</td>
+                    <td><span class="badge badge-glifosato">Glifosato</span></td>
+                    <td class="td-number">774,00</td>
+                    <td class="td-number">255.237</td>
+                    <td class="td-number">16,81</td>
+                    <td>China (88%)</td>
+                </tr>
+                <tr>
+                    <td>3º</td>
+                    <td><span class="badge badge-mancozeb">Mancozebe</span></td>
+                    <td class="td-number">444,30</td>
+                    <td class="td-number">135.179</td>
+                    <td class="td-number">18,32</td>
+                    <td>Índia (65%)</td>
+                </tr>
+                <tr>
+                    <td>4º</td>
+                    <td><span class="badge badge-24d">2,4-D</span></td>
+                    <td class="td-number">182,40</td>
+                    <td class="td-number">100.029</td>
+                    <td class="td-number">10,06</td>
+                    <td>China (75%)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>* Nota sobre Cletodim:</strong> Os volumes apresentados incluem dados dos NCMs 38.08.93.29 
+            e 29.30.90.39, que agregam múltiplas moléculas junto ao Cletodim. Os valores reais para esta 
+            molécula específica são menores que os reportados.
+        </div>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">Evolução Anual de Valores Importados</div>
+        
+        <div class="chart-container-report">
+            <div class="chart-title">Valor Importado por Molécula (2020-2025)</div>
+            <div class="chart-subtitle">Em milhões de USD | Fonte: Comex Stat<br></div>
+            <img src="/static/img/grafico_valor_usd_moleculas.png" 
+                alt="Gráfico de valor importado por molécula" 
+                style="width: 100%; height: auto;">
+        </div>
+
+        <p>
+            O ano de 2022 marcou o pico de valor importado de Glifosato (USD 2,25 bilhões)
+            e Cletodim (USD 1,96 bilhão), impulsionado pela escalada de preços durante
+            a pandemia e guerra da Ucrânia. Em 2023-2024, observa-se normalização com
+            retração da demanda e ajuste de estoques.
+        </p>
+    </div>
+
+    <div class="page-footer">
+        <span>Relatório Executivo | Análise de Importações de Agroquímicos</span>
+        <span>Página 2 de 5</span>
+    </div>
+</div>
+
+<div class="page" id="page-3">
+    
+    <div class="section report-content">
+        <div class="section-title">2. Tendência de Preços nos Últimos 5 Anos</div>
+        <div class="section-subtitle">Análise da evolução dos preços de importação e venda no canal de distribuição</div>
+
+        <p>
+            A análise temporal revela dinâmicas distintas entre moléculas. <strong>Glifosato</strong> apresentou a maior amplitude, 
+            quintuplicando de R$25 para R$125/kg no pico de 2022. <strong>2,4-D</strong> e <strong>Cletodim</strong> triplicaram e 
+            dobraram respectivamente. <strong>Mancozebe</strong> manteve-se estável, com a UPL absorvendo a volatilidade via 
+            integração vertical com fábricas na Índia. Em 2025, observa-se leve retomada de preços associada à redução de 
+            capacidade produtiva chinesa.
+        </p>
+    </div>
+
+    <div class="chart-container-report">
+        <div class="chart-title">Evolução do Preço de Venda ao Distribuidor</div>
+        <div class="chart-subtitle" style="padding-bottom: 10px;">Produto representativo por molécula | R$/kg | Fonte: Kynetec</div>
+        <img src="/static/img/grafico_precos_venda.png" 
+            alt="Evolução do preço de venda por molécula" 
+            style="width: 100%; height: auto;">
+    </div>
+
+    <div class="insight-box">
+        <div class="insight-title">Hipóteses para Modelagem Preditiva</div>
+        <p>
+            A decomposição das séries temporais revelou: (1) tendência com padrão polinomial, capturável via 
+            splines ou média móvel; (2) sazonalidade de baixa amplitude, modelável com seno/cosseno; 
+            (3) resíduos elevados em 2022, indicando necessidade de variáveis externas como câmbio, frete 
+            marítimo e área plantada. A similaridade entre produtos do mesmo ingrediente ativo sugeriu inicialmente
+            modelagem por grupo de IA, com features categóricas para segmento de mercado e força de marca.
+        </p>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">Contexto Geopolítico</div>
+        <p>
+            A escalada de preços iniciou em meados de 2021 com a desestabilização da cadeia de suprimentos 
+            durante a pandemia. Com a guerra da Ucrânia em fevereiro de 2022, custos de energia e fertilizantes 
+            elevaram-se ainda mais, enquanto lockdowns na China causaram gargalos logísticos.
+            O Glifosato foi particularmente afetado por ter 66% da produção global concentrada na China.
+            O Cletodim sofreu com a escassez de Etil Mercaptano, matéria-prima controlada por poucos fabricantes
+            ocidentais. A normalização veio no segundo semestre de 2022 com retração da demanda, recomposição
+            de estoques e relaxamento das políticas de Covid-19 na China em dezembro de 2022. 
+            Em 2025, nova pressão de preços reflete redução de capacidade produtiva chinesa por baixa rentabilidade.
+        </p>
+    </div>
+
+    <div class="page-footer">
+        <span>Relatório Executivo | Análise de Importações de Agroquímicos</span>
+        <span>Página 3 de 5</span>
+    </div>
+</div>
+
+<div class="page" id="page-4">
+    
+    <div class="section report-content">
+        <div class="section-title">3. Correlação entre Variação do Preço de Importação e Venda</div>
+        <div class="section-subtitle">Análise de cross-correlation com diferentes defasagens temporais (lags)</div>
+
+        <p>
+            A análise de correlação cruzada investigou a relação entre variações no preço de importação 
+            e subsequentes variações no preço de venda ao canal de distribuição. Foram testadas múltiplas 
+            transformações (variação percentual mensal, trimestral e semestral) com defasagens de 0 a 6 meses.
+        </p>
+
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Molécula</th>
+                    <th>Melhor Feature</th>
+                    <th>Lag Ótimo</th>
+                    <th>Pearson (r)</th>
+                    <th>p-valor</th>
+                    <th>Interpretação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge badge-glifosato">Glifosato</span></td>
+                    <td>Var. % trimestral</td>
+                    <td>0 meses</td>
+                    <td class="td-number td-positive">0.553</td>
+                    <td class="td-number">&lt; 0.001</td>
+                    <td>Forte, resposta imediata</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-24d">2,4-D</span></td>
+                    <td>Var. % semestral</td>
+                    <td>0 meses</td>
+                    <td class="td-number td-positive">0.409</td>
+                    <td class="td-number">&lt; 0.001</td>
+                    <td>Moderada, tendência 6m</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-mancozeb">Mancozebe</span></td>
+                    <td>Var. % trimestral</td>
+                    <td>4 meses</td>
+                    <td class="td-number">0.246</td>
+                    <td class="td-number">0.048</td>
+                    <td>Fraca, absorção de custos</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-clethodim">Cletodim</span></td>
+                    <td>Var. % semestral</td>
+                    <td>1-2 meses</td>
+                    <td class="td-number td-negative">-0.324</td>
+                    <td class="td-number">0.009</td>
+                    <td>Negativa*, dados ruidosos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>* Correlação negativa do Cletodim:</strong> O sinal invertido e a divergência entre 
+            correlações de Pearson e Spearman indicam que os dados de importação (NCMs 38.08.93.29 e 
+            29.30.90.39 agregam múltiplas moléculas) não representam adequadamente o custo real do 
+            Cletodim, inviabilizando modelagem preditiva confiável para esta molécula.
+        </div>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">Implicações para Modelagem Preditiva</div>
+        
+        <div class="grid-2">
+            <div>
+                <p>
+                    <strong>Glifosato</strong> apresenta as melhores perspectivas para um modelo preditivo, 
+                    com correlação forte (r=0.55) e estatisticamente significativa. A resposta imediata (lag 0) 
+                    às variações trimestrais de preço de importação sugere que distribuidores monitoram 
+                    ativamente tendências de custo e ajustam preços rapidamente. Análise por produto confirmou 
+                    padrão similar entre Roundup WG (r=0.53) e Zapp QI 620 (r=0.55).
+                </p>
+                <p>
+                    <strong>2,4-D</strong> também oferece potencial, especialmente considerando variações 
+                    de médio prazo (6 meses). A análise por produto revelou heterogeneidade: 
+                    Aminol 806 (r=0.43) e U 46 BR (r=0.4) respondem mais fortemente que 2,4-D Nortox (r=0.20),
+                    sugerindo diferentes estratégias de posicionamento de mercado.
+                </p>
+            </div>
+            <div>
+                <p>
+                    <strong>Mancozebe</strong> demanda abordagem diferenciada. A correlação fraca (r=0.25) com 
+                    lag de 4 meses não indica ausência de relação, mas sim uma estratégia deliberada de 
+                    estabilização de preços pela UPL via integração vertical. Modelos para esta molécula 
+                    devem incorporar variáveis de posicionamento competitivo e capacidade de absorção de 
+                    custos, sendo preferível modelagem agregada com posterior desagregação por produto.
+                </p>
+                <p>
+                    <strong>Cletodim</strong> apresenta limitações estruturais nos dados. A correlação negativa 
+                    e a divergência entre Pearson (significativo) e Spearman (não significativo) sugerem 
+                    relação não-linear. Como os NCMs utilizados agregam múltiplas moléculas,
+                    o preço de importação não representa adequadamente o seu custo real.
+                    Modelagem confiável exigiria estudo mais aprofundado para entender como melhor 
+                    obter informações de importação.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <span>Relatório Executivo | Análise de Importações de Agroquímicos</span>
+        <span>Página 4 de 5</span>
+    </div>
+</div>
+
+<div class="page" id="page-5">
+    
+    <div class="section report-content">
+        <div class="section-title">4. Insights de Negócio</div>
+
+        <ul class="bullet-list">
+            <li>
+                <strong>Concentração de origem:</strong> A dependência da China (>70% do volume para 3 de 4 moléculas) 
+                representa risco de supply chain. Eventos como lockdowns ou tensões comerciais impactam diretamente 
+                disponibilidade e preços.
+            </li>
+            <li>
+                <strong>Estratégias de pricing diferenciadas:</strong> Enquanto herbicidas (Glifosato, 2,4-D) repassam 
+                volatilidade rapidamente, fungicidas (Mancozebe) demonstram maior estabilidade, possivelmente devido 
+                a contratos de longo prazo ou integração vertical dos fabricantes.
+            </li>
+            <li>
+                <strong>Janela de previsibilidade:</strong> Para Glifosato e 2,4-D, variações no preço de importação 
+                têm poder preditivo sobre preços de distribuição, com horizonte de 0-3 meses. Isso permite 
+                antecipação de movimentos de mercado.
+            </li>
+            <li>
+                <strong>Nova baseline de custos:</strong> Os preços pós-2022 estabilizaram em patamar superior ao 
+                pré-crise, indicando que parte do choque foi estrutural e não apenas conjuntural.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">5. Limitações Metodológicas</div>
+
+        <p>
+            A principal limitação identificada refere-se à <strong>granularidade dos códigos NCM</strong>. 
+            Os códigos fornecidos inicialmente (29.22.19.12 para 2,4-D, 38.08.93.24 para Glifosato, 
+            38.24.99.86 para Mancozebe e 29.30.90.39 para Cletodim) representavam apenas parte do 
+            mercado real. A pesquisa identificou NCMs adicionais que ampliam a cobertura, mas como alguns NCMs
+            (especialmente 38.08.93.29 para Cletodim) agrupam múltiplas substâncias ativas,
+            é impossível isolar o volume específico da molécula de interesse.
+        </p>
+
+        <p>
+            Adicionalmente, duas séries de preço de venda apresentaram <strong>descontinuidades significativas</strong>: 
+            <span class="highlight-text">Glyphosate AE 720 Post-Patent</span> e <span class="highlight-text">Clethodim 240 Post-Patent</span> possuem gaps de aproximadamente 24 meses 
+            (2023-2025), impossibilitando decomposição STL completa e exigindo sua exclusão da análise de correlação. 
+            As moléculas correspondentes permanecem representadas pelos demais produtos.
+        </p>
+    </div>
+
+    <div class="section report-content">
+        <div class="section-title">6. Recomendações</div>
+
+        <ul class="bullet-list">
+            <li>
+                <strong>Incorporar variáveis externas:</strong> Importar as features identificadas no estudo 
+                exploratório (como câmbio, frete marítimo, área plantada, entre outras) para traduzir a 
+                dinâmica de mercado para o modelo e quantificar sua correlação com a variação de preço de venda.
+            </li>
+            <li>
+                <strong>Incluir indicadores macroeconômicos:</strong> Avaliar o impacto de variáveis como 
+                taxa Selic, preço de commodities agrícolas e índices climáticos (El Niño/La Niña) na 
+                formação de preços do setor.
+            </li>
+            <li>
+                <strong>Buscar dados de importação mais granulares:</strong> Verificar viabilidade de obter 
+                informações diretamente com importadoras para superar a limitação dos NCMs agregados, 
+                especialmente para Cletodim.
+            </li>
+            <li>
+                <strong>Investigar dados de estoque:</strong> A análise não incorpora níveis de estoque 
+                nas revendas, fator que influencia significativamente a dinâmica de preços independentemente 
+                do custo de importação.
+            </li>
+        </ul>
+    </div>
+
+    <div class="report-final-footer" style="margin-top: 40px;">
+        <div class="footer-title">Relatório Executivo | Análise de Importações de Agroquímicos</div>
+        <div class="footer-credits">Desenvolvido por Fábio Galdino como parte do Processo Seletivo da Kynetec | Janeiro 2026</div>
+    </div>
+
+    <div class="page-footer">
+        <span>Relatório Executivo | Análise de Importações de Agroquímicos</span>
+        <span>Página 5 de 5</span>
+    </div>
+</div>
+
+</body>
+</html>
